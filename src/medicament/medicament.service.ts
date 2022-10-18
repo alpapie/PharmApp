@@ -1,4 +1,3 @@
-import { User } from './../../dist/user/entities/user.entity.d';
 import { UserService } from 'src/user/user.service';
 import { Injectable, NotFoundException } from '@nestjs/common';
 
@@ -9,7 +8,7 @@ import {Medicament} from './entities/medicament.entity';
 @Injectable()
 export class MedicamentService {
   constructor(@InjectModel('medicament') private MedicamentModel :Model<Medicament>,
-  @InjectModel('user') private readonly UserModule: Model<User>
+  private readonly userService: UserService
   ){
   }
 
@@ -21,7 +20,7 @@ export class MedicamentService {
 
  async findAll() {
     const medicaments= await this.MedicamentModel.find().exec();
-    const user= await this.UserModule.find();
+    const user= await this.userService.findAll();
     return {user,medicaments};
     
   }

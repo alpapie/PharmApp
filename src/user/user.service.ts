@@ -11,16 +11,9 @@ export class UserService {
   constructor(@InjectModel('user') private userModel:Model<User>) {
   }
 
-  async connect(user){
+  async finduser(user){
    const getUser= await this.userModel.findOne({email:user.email});
-   if(!getUser){
-     return 'Email ou mot de passe incorrect'
-   }
-   const isMatch= await bcrypt.compare(user.password,getUser.password);
-   if(!isMatch){
-     return 'Email ou mot de passe incorrect'
-   }
-    return `connection reussu ${getUser}`;
+    return getUser;
    }
 
   async create(user) {

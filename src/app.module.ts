@@ -4,11 +4,14 @@ import { AppService } from './app.service';
 import { MedicamentModule } from './medicament/medicament.module';
 import { UserModule } from './user/user.module';
 import { MongooseModule } from '@nestjs/mongoose';
+import { AuthModule } from './auth/auth.module';
+import { ConfigModule } from '@nestjs/config';
 
 
 @Module({
-  imports: [MedicamentModule, UserModule,
-    MongooseModule.forRoot("mongodb+srv://alpapie:WvOsLBBU1ztGsJoZ@cluster0.hso1qka.mongodb.net/PharmApp?retryWrites=true&w=majority"),
+  imports: [ ConfigModule.forRoot({ isGlobal: true }),MedicamentModule, UserModule,
+    MongooseModule.forRoot(process.env.DB_MONGO),
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
